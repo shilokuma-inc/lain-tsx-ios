@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4FA0DA432BE2D5B6004E332F /* LainTSXWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA0DA422BE2D5B6004E332F /* LainTSXWebView.swift */; };
 		4FD1EFCC2BE2D3AE000811F4 /* lain_tsx_iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD1EFCB2BE2D3AE000811F4 /* lain_tsx_iosApp.swift */; };
 		4FD1EFCE2BE2D3AE000811F4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD1EFCD2BE2D3AE000811F4 /* ContentView.swift */; };
 		4FD1EFD02BE2D3AF000811F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FD1EFCF2BE2D3AF000811F4 /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4FA0DA422BE2D5B6004E332F /* LainTSXWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LainTSXWebView.swift; sourceTree = "<group>"; };
 		4FD1EFC82BE2D3AE000811F4 /* lain-tsx-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lain-tsx-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FD1EFCB2BE2D3AE000811F4 /* lain_tsx_iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lain_tsx_iosApp.swift; sourceTree = "<group>"; };
 		4FD1EFCD2BE2D3AE000811F4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 			children = (
 				4FD1EFCB2BE2D3AE000811F4 /* lain_tsx_iosApp.swift */,
 				4FD1EFCD2BE2D3AE000811F4 /* ContentView.swift */,
+				4FA0DA422BE2D5B6004E332F /* LainTSXWebView.swift */,
 				4FD1EFCF2BE2D3AF000811F4 /* Assets.xcassets */,
 				4FD1EFD12BE2D3AF000811F4 /* lain_tsx_ios.entitlements */,
 				4FD1EFD22BE2D3AF000811F4 /* Preview Content */,
@@ -140,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FD1EFCE2BE2D3AE000811F4 /* ContentView.swift in Sources */,
+				4FA0DA432BE2D5B6004E332F /* LainTSXWebView.swift in Sources */,
 				4FD1EFCC2BE2D3AE000811F4 /* lain_tsx_iosApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
