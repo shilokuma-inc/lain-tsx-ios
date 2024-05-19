@@ -1,4 +1,4 @@
-# lain-tsx-ios
+# LainTSXApp
 lainTSX on iOS
 
 ## Status

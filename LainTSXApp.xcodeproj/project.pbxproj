@@ -7,18 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4FD1EFCC2BE2D3AE000811F4 /* lain_tsx_iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD1EFCB2BE2D3AE000811F4 /* lain_tsx_iosApp.swift */; };
+		4FD1EFCC2BE2D3AE000811F4 /* LainTSXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD1EFCB2BE2D3AE000811F4 /* LainTSXApp.swift */; };
 		4FD1EFCE2BE2D3AE000811F4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD1EFCD2BE2D3AE000811F4 /* ContentView.swift */; };
 		4FD1EFD02BE2D3AF000811F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FD1EFCF2BE2D3AF000811F4 /* Assets.xcassets */; };
 		4FD1EFD42BE2D3AF000811F4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FD1EFD32BE2D3AF000811F4 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4FD1EFC82BE2D3AE000811F4 /* lain-tsx-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lain-tsx-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4FD1EFCB2BE2D3AE000811F4 /* lain_tsx_iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lain_tsx_iosApp.swift; sourceTree = "<group>"; };
+		4FD1EFC82BE2D3AE000811F4 /* LainTSXApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LainTSXApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FD1EFCB2BE2D3AE000811F4 /* LainTSXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LainTSXApp.swift; sourceTree = "<group>"; };
 		4FD1EFCD2BE2D3AE000811F4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4FD1EFCF2BE2D3AF000811F4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4FD1EFD12BE2D3AF000811F4 /* lain_tsx_ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = lain_tsx_ios.entitlements; sourceTree = "<group>"; };
+		4FD1EFD12BE2D3AF000811F4 /* LainTSXApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LainTSXApp.entitlements; sourceTree = "<group>"; };
 		4FD1EFD32BE2D3AF000811F4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -36,7 +36,7 @@
 		4FD1EFBF2BE2D3AE000811F4 = {
 			isa = PBXGroup;
 			children = (
-				4FD1EFCA2BE2D3AE000811F4 /* lain-tsx-ios */,
+				4FD1EFCA2BE2D3AE000811F4 /* LainTSXApp */,
 				4FD1EFC92BE2D3AE000811F4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -44,21 +44,21 @@
 		4FD1EFC92BE2D3AE000811F4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4FD1EFC82BE2D3AE000811F4 /* lain-tsx-ios.app */,
+				4FD1EFC82BE2D3AE000811F4 /* LainTSXApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4FD1EFCA2BE2D3AE000811F4 /* lain-tsx-ios */ = {
+		4FD1EFCA2BE2D3AE000811F4 /* LainTSXApp */ = {
 			isa = PBXGroup;
 			children = (
-				4FD1EFCB2BE2D3AE000811F4 /* lain_tsx_iosApp.swift */,
+				4FD1EFCB2BE2D3AE000811F4 /* LainTSXApp.swift */,
 				4FD1EFCD2BE2D3AE000811F4 /* ContentView.swift */,
 				4FD1EFCF2BE2D3AF000811F4 /* Assets.xcassets */,
-				4FD1EFD12BE2D3AF000811F4 /* lain_tsx_ios.entitlements */,
+				4FD1EFD12BE2D3AF000811F4 /* LainTSXApp.entitlements */,
 				4FD1EFD22BE2D3AF000811F4 /* Preview Content */,
 			);
-			path = "lain-tsx-ios";
+			path = "LainTSXApp";
 			sourceTree = "<group>";
 		};
 		4FD1EFD22BE2D3AF000811F4 /* Preview Content */ = {
@@ -72,9 +72,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4FD1EFC72BE2D3AE000811F4 /* lain-tsx-ios */ = {
+		4FD1EFC72BE2D3AE000811F4 /* LainTSXApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4FD1EFD72BE2D3AF000811F4 /* Build configuration list for PBXNativeTarget "lain-tsx-ios" */;
+			buildConfigurationList = 4FD1EFD72BE2D3AF000811F4 /* Build configuration list for PBXNativeTarget "LainTSXApp" */;
 			buildPhases = (
 				4FD1EFC42BE2D3AE000811F4 /* Sources */,
 				4FD1EFC52BE2D3AE000811F4 /* Frameworks */,
@@ -84,9 +84,9 @@
 			);
 			dependencies = (
 			);
-			name = "lain-tsx-ios";
-			productName = "lain-tsx-ios";
-			productReference = 4FD1EFC82BE2D3AE000811F4 /* lain-tsx-ios.app */;
+			name = "LainTSXApp";
+			productName = "LainTSXApp";
+			productReference = 4FD1EFC82BE2D3AE000811F4 /* LainTSXApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -104,7 +104,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4FD1EFC32BE2D3AE000811F4 /* Build configuration list for PBXProject "lain-tsx-ios" */;
+			buildConfigurationList = 4FD1EFC32BE2D3AE000811F4 /* Build configuration list for PBXProject "LainTSXApp" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -117,7 +117,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4FD1EFC72BE2D3AE000811F4 /* lain-tsx-ios */,
+				4FD1EFC72BE2D3AE000811F4 /* LainTSXApp */,
 			);
 		};
 /* End PBXProject section */
@@ -140,7 +140,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FD1EFCE2BE2D3AE000811F4 /* ContentView.swift in Sources */,
-				4FD1EFCC2BE2D3AE000811F4 /* lain_tsx_iosApp.swift in Sources */,
+				4FD1EFCC2BE2D3AE000811F4 /* LainTSXApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,10 +266,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "lain-tsx-ios/lain_tsx_ios.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "LainTSXApp/LainTSXApp.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"lain-tsx-ios/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"LainTSXApp/Preview Content\"";
 				DEVELOPMENT_TEAM = XU74X3434S;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -289,7 +289,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.3;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "ml.mrs1669.lain-tsx-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = "ml.mrs1669.LainTSXApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -304,10 +304,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "lain-tsx-ios/lain_tsx_ios.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "LainTSXApp/LainTSXApp.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"lain-tsx-ios/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"LainTSXApp/Preview Content\"";
 				DEVELOPMENT_TEAM = XU74X3434S;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -327,7 +327,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.3;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "ml.mrs1669.lain-tsx-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = "ml.mrs1669.LainTSXApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -340,7 +340,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4FD1EFC32BE2D3AE000811F4 /* Build configuration list for PBXProject "lain-tsx-ios" */ = {
+		4FD1EFC32BE2D3AE000811F4 /* Build configuration list for PBXProject "LainTSXApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4FD1EFD52BE2D3AF000811F4 /* Debug */,
@@ -349,7 +349,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4FD1EFD72BE2D3AF000811F4 /* Build configuration list for PBXNativeTarget "lain-tsx-ios" */ = {
+		4FD1EFD72BE2D3AF000811F4 /* Build configuration list for PBXNativeTarget "LainTSXApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4FD1EFD82BE2D3AF000811F4 /* Debug */,
