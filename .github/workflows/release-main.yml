@@ -41,11 +41,16 @@ jobs:
                               -sdk iphoneos \
                               -configuration Release \
                               -archivePath build.xcarchive \
+                              CURRENT_PROJECT_VERSION=`date -u +%Y%m%d%H%M` \
                               CODE_SIGNING_ALLOWED=NO
 
       - name: Create ExportOptions.plist
         run: |
           echo '${{ secrets.EXPORT_OPTIONS }}' > ExportOptions.plist
+          # Xcode に任せると App Store Connect の既存ビルドと番号が衝突するため、
+          # アーカイブ時に設定したビルド番号をそのまま使う
+          /usr/libexec/PlistBuddy -c "Delete :manageAppVersionAndBuildNumber" ExportOptions.plist || true
+          /usr/libexec/PlistBuddy -c "Add :manageAppVersionAndBuildNumber bool false" ExportOptions.plist
 
       - name: Create Private Key
         run: |
