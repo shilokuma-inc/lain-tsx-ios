@@ -1,17 +1,17 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-# App Store Connect にスクリーンショットを 1 枚アップロードする。
+# App Store Connect にスクリーンショットをアップロードする。
 #
 # 編集可能な App Store バージョンを探し、その全ロケールについて、
 # 対象サイズの既存スクリーンショットを削除してから差し替える。
 #
 # 必要な環境変数:
-#   ASC_KEY_ID       App Store Connect API キーの Key ID
-#   ASC_ISSUER_ID    Issuer ID
-#   ASC_KEY_PATH     .p8 秘密鍵のパス
-#   BUNDLE_ID        対象アプリの bundle identifier
-#   SCREENSHOT_PATH  アップロードする PNG のパス
+#   ASC_KEY_ID        App Store Connect API キーの Key ID
+#   ASC_ISSUER_ID     Issuer ID
+#   ASC_KEY_PATH      .p8 秘密鍵のパス
+#   BUNDLE_ID         対象アプリの bundle identifier
+#   SCREENSHOT_PATHS  アップロードする PNG のパス。カンマ区切りで、並べた順が表示順になる
 
 require "base64"
 require "digest"
@@ -166,15 +166,11 @@ def screenshot_set_id(localization_id, display_type)
   created.dig("data", "id")
 end
 
-def replace_screenshot(set_id, path, file_name)
-  api(:get, "/v1/appScreenshotSets/#{set_id}/appScreenshots?limit=50")["data"].each do |screenshot|
-    api(:delete, "/v1/appScreenshots/#{screenshot['id']}")
-  end
-
+def upload_screenshot(set_id, path)
   reservation = api(:post, "/v1/appScreenshots", {
     data: {
       type: "appScreenshots",
-      attributes: { fileSize: File.size(path), fileName: file_name },
+      attributes: { fileSize: File.size(path), fileName: File.basename(path) },
       relationships: {
         appScreenshotSet: { data: { type: "appScreenshotSets", id: set_id } }
       }
@@ -193,16 +189,37 @@ def replace_screenshot(set_id, path, file_name)
   })
 
   wait_until_processed(screenshot_id)
+  screenshot_id
 end
 
-path = ENV.fetch("SCREENSHOT_PATH")
+# セットの中身を、渡した順序どおりに置き換える。
+def replace_screenshots(set_id, paths)
+  api(:get, "/v1/appScreenshotSets/#{set_id}/appScreenshots?limit=50")["data"].each do |screenshot|
+    api(:delete, "/v1/appScreenshots/#{screenshot['id']}")
+  end
+
+  ids = paths.map { |path| upload_screenshot(set_id, path) }
+
+  # アップロードした順が表示順になる保証はないため、明示的に並べ替える
+  api(:patch, "/v1/appScreenshotSets/#{set_id}/relationships/appScreenshots", {
+    data: ids.map { |id| { type: "appScreenshots", id: id } }
+  })
+end
+
 bundle_id = ENV.fetch("BUNDLE_ID")
+paths = ENV.fetch("SCREENSHOT_PATHS").split(",").map(&:strip).reject(&:empty?)
+abort "SCREENSHOT_PATHS が空です" if paths.empty?
 
-width, height = png_dimensions(path)
-display_type = DISPLAY_TYPES.fetch([width, height]) do
-  abort "#{width}x#{height} に対応する App Store Connect の表示タイプがありません"
+# 同じ表示タイプのものは 1 つのセットにまとめる。
+# Hash は挿入順を保つため、SCREENSHOT_PATHS に並べた順がそのまま表示順になる。
+groups = paths.group_by do |screenshot|
+  width, height = png_dimensions(screenshot)
+  display_type = DISPLAY_TYPES.fetch([width, height]) do
+    abort "#{width}x#{height} に対応する App Store Connect の表示タイプがありません (#{screenshot})"
+  end
+  puts "スクリーンショット: #{File.basename(screenshot)} #{width}x#{height} (#{display_type})"
+  display_type
 end
-puts "スクリーンショット: #{width}x#{height} (#{display_type})"
 
 apps = api(:get, "/v1/apps?filter[bundleId]=#{URI.encode_www_form_component(bundle_id)}&limit=1")
 app_id = apps["data"].first&.fetch("id") or abort "#{bundle_id} のアプリが見つかりません"
@@ -218,10 +235,11 @@ puts "対象バージョン: #{version.dig('attributes', 'versionString')} (#{ve
 localizations = api(:get, "/v1/appStoreVersions/#{version['id']}/appStoreVersionLocalizations?limit=50")["data"]
 abort "ロケールが 1 つもありません" if localizations.empty?
 
-file_name = File.basename(path)
 localizations.each do |localization|
   locale = localization.dig("attributes", "locale")
-  set_id = screenshot_set_id(localization["id"], display_type)
-  replace_screenshot(set_id, path, file_name)
-  puts "アップロード完了: #{locale}"
+  groups.each do |display_type, group_paths|
+    set_id = screenshot_set_id(localization["id"], display_type)
+    replace_screenshots(set_id, group_paths)
+    puts "アップロード完了: #{locale} / #{display_type} (#{group_paths.size} 枚)"
+  end
 end

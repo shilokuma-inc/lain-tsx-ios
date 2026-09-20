@@ -46,15 +46,7 @@ jobs:
           echo "BUNDLE_ID=$bundle_id" >> $GITHUB_ENV
           echo "scheme: $scheme / bundle id: $bundle_id"
 
-      - name: Build for Simulator
-        run: |
-          xcodebuild build -"$FILETYPE_PARAMETER" "$FILE_TO_BUILD" \
-                           -scheme "$SCHEME" \
-                           -configuration Debug \
-                           -destination "platform=iOS Simulator,name=${{ inputs.device }}" \
-                           -derivedDataPath build
-
-      - name: Capture Screenshot
+      - name: Capture Screenshots
         run: |
           if ! xcrun simctl list devices available | grep -q "^ *${{ inputs.device }} ("; then
             echo "シミュレータ '${{ inputs.device }}' がランナーにありません。利用できるのは以下です。"
@@ -65,20 +57,42 @@ jobs:
           xcrun simctl boot "${{ inputs.device }}" || true
           xcrun simctl bootstatus "${{ inputs.device }}" -b
 
-          app_path=$(find build/Build/Products/Debug-iphonesimulator -maxdepth 1 -name "*.app" | head -1)
-          xcrun simctl install booted "$app_path"
-          xcrun simctl launch booted "$BUNDLE_ID"
+          # simctl からはデバイスを回転させられないため、対応する向きを 1 つに絞ってビルドし、
+          # その向きでしか表示できないアプリとして起動させる
+          capture() {
+            orientations="$1"
+            output="$2"
 
-          # ゲームの読み込みが終わるのを待ってから撮る
-          sleep ${{ inputs.wait_seconds }}
-          xcrun simctl io booted screenshot screenshot.png
-          sips -g pixelWidth -g pixelHeight screenshot.png
+            xcodebuild build -"$FILETYPE_PARAMETER" "$FILE_TO_BUILD" \
+                             -scheme "$SCHEME" \
+                             -configuration Debug \
+                             -destination "platform=iOS Simulator,name=${{ inputs.device }}" \
+                             -derivedDataPath build \
+                             INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone="$orientations" \
+                             INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad="$orientations"
 
-      - name: Upload Screenshot to GitHub
+            app_path=$(find build/Build/Products/Debug-iphonesimulator -maxdepth 1 -name "*.app" | head -1)
+            xcrun simctl terminate booted "$BUNDLE_ID" || true
+            xcrun simctl uninstall booted "$BUNDLE_ID" || true
+            xcrun simctl install booted "$app_path"
+            xcrun simctl launch booted "$BUNDLE_ID"
+
+            # ゲームの読み込みが終わるのを待ってから撮る
+            sleep ${{ inputs.wait_seconds }}
+            xcrun simctl io booted screenshot "$output"
+            sips -g pixelWidth -g pixelHeight "$output"
+          }
+
+          capture "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight" landscape.png
+          capture "UIInterfaceOrientationPortrait" portrait.png
+
+      - name: Upload Screenshots to GitHub
         uses: actions/upload-artifact@v4
         with:
-          name: screenshot
-          path: screenshot.png
+          name: screenshots
+          path: |
+            landscape.png
+            portrait.png
 
       - name: Create Private Key
         if: ${{ !inputs.dry_run }}
@@ -92,5 +106,6 @@ jobs:
           ASC_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
           ASC_ISSUER_ID: ${{ secrets.APPLE_API_ISSUER_ID }}
           ASC_KEY_PATH: private_keys/AuthKey_${{ secrets.APPLE_API_ISSUER_ID }}.p8
-          SCREENSHOT_PATH: screenshot.png
+          # 並べた順が App Store Connect 上の表示順になる
+          SCREENSHOT_PATHS: landscape.png,portrait.png
         run: ruby scripts/upload_screenshot.rb
