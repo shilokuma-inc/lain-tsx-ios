@@ -22,6 +22,10 @@ jobs:
     name: Screenshot
     runs-on: macos-latest
 
+    env:
+      PROJECT: LainTSXApp.xcodeproj
+      SCHEME: LainTSXApp
+
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
@@ -36,15 +40,17 @@ jobs:
 
       - name: Set Environment
         run: |
-          if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
-          file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
-          scheme=$(xcodebuild -list -json | tr -d "\n" | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
-          bundle_id=$(xcodebuild -showBuildSettings -"$filetype_parameter" "$file_to_build" -scheme "$scheme" | grep -m1 " PRODUCT_BUNDLE_IDENTIFIER " | awk '{print $3}')
-          echo "FILETYPE_PARAMETER=$filetype_parameter" >> $GITHUB_ENV
-          echo "FILE_TO_BUILD=$file_to_build" >> $GITHUB_ENV
-          echo "SCHEME=$scheme" >> $GITHUB_ENV
+          set -euo pipefail
+          # grep -m1 のように途中で読むのをやめるとパイプ元が SIGPIPE で死に、pipefail に引っかかる。
+          # いったん全部受け取ってから取り出す。
+          settings=$(xcodebuild -showBuildSettings -project "$PROJECT" -scheme "$SCHEME")
+          bundle_id=$(awk '$1 == "PRODUCT_BUNDLE_IDENTIFIER" && !found { print $3; found = 1 }' <<< "$settings")
+          if [ -z "$bundle_id" ]; then
+            echo "::error::PRODUCT_BUNDLE_IDENTIFIER が取れなかった"
+            exit 1
+          fi
           echo "BUNDLE_ID=$bundle_id" >> $GITHUB_ENV
-          echo "scheme: $scheme / bundle id: $bundle_id"
+          echo "bundle id: $bundle_id"
 
       - name: Capture Screenshots
         run: |
@@ -63,7 +69,7 @@ jobs:
             orientations="$1"
             output="$2"
 
-            xcodebuild build -"$FILETYPE_PARAMETER" "$FILE_TO_BUILD" \
+            xcodebuild build -project "$PROJECT" \
                              -scheme "$SCHEME" \
                              -configuration Debug \
                              -destination "platform=iOS Simulator,name=${{ inputs.device }}" \
