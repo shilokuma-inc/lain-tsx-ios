@@ -24,9 +24,10 @@ API_BASE = "https://api.appstoreconnect.apple.com"
 
 # 画像の実寸から App Store Connect の表示タイプを決める。
 # 1 つのサイズが複数のタイプで受け付けられる場合は、新しい方を選んでいる。
+# 6.9 インチ（1320x2868）は API に専用の値が無く、APP_IPHONE_67 のスロットで受け付けられる。
 DISPLAY_TYPES = {
-  [1320, 2868] => "APP_IPHONE_69",
-  [2868, 1320] => "APP_IPHONE_69",
+  [1320, 2868] => "APP_IPHONE_67",
+  [2868, 1320] => "APP_IPHONE_67",
   [1290, 2796] => "APP_IPHONE_67",
   [2796, 1290] => "APP_IPHONE_67",
   [1284, 2778] => "APP_IPHONE_67",
