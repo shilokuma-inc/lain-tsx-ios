@@ -1,8 +1,9 @@
 name: Release/main
 
 on:
-  push:
-    branches: main
+  # main への push では Build（build-main.yml）だけを実行し、App Store Connect へは自動でアップロードしない。
+  # main の内容をアップロードするときは、ブランチに main を選んで手動で実行する
+  workflow_dispatch:
 
 jobs:          
   build:
