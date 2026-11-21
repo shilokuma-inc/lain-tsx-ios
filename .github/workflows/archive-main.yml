@@ -1,8 +1,8 @@
 name: Archive/main
 
 on:
-  push:
-    branches: main
+  # main への push では Build（build-main.yml）だけを実行する。Archive は必要なときに手動で実行する
+  workflow_dispatch:
 
 jobs:          
   build:
